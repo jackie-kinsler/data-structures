@@ -161,10 +161,9 @@ def all_data(filename):
     all_data = []
 
     for line in open(filename):
-      first, last, house, advisor, cohort = line
+      first, last, house, advisor, cohort = line.rstrip().split("|")
       full_name = f"{first} {last}"
-      data = (full_name, house, advisor, cohort)
-      all_data.add(data)
+      all_data.append((full_name, house, advisor, cohort))
 
     return all_data
 
