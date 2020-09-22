@@ -142,8 +142,6 @@ def all_names_by_house(filename):
 def all_data(filename):
     """Return all the data in a file.
 
-    Each line in the file is a tuple of (full_name, house, advisor, cohort)
-
     Iterate over the data to create a big list of tuples that individually
     hold all the data for each person. (full_name, house, advisor, cohort)
 
@@ -189,8 +187,10 @@ def get_cohort_for(filename, name):
       - str: the person's cohort or None
     """
 
-    # TODO: replace this with your code
-
+    for line in open(filename):
+      first, last, _, _, cohort = line.rstrip().split("|")
+      if f'{first} {last}' == name: 
+        return cohort
 
 def find_duped_last_names(filename):
     """Return a set of duplicated last names that exist in the data.
@@ -206,7 +206,20 @@ def find_duped_last_names(filename):
       - set[str]: a set of strings
     """
 
-    # TODO: replace this with your code
+    last_names = []
+    duplicated_names = set() 
+
+    scroll = open(filename)
+
+    for line in scroll: 
+      first, last, _, _, _ = line.rstrip().split("|")
+      if last in last_names: 
+        duplicated_names.add(last)
+      else: 
+        last_names.append(last)
+    
+    return duplicated_names
+
 
 
 def get_housemates_for(filename, name):
@@ -221,8 +234,24 @@ def get_housemates_for(filename, name):
     {'Angelina Johnson', ..., 'Seamus Finnigan'}
     """
 
-    # TODO: replace this with your code
+    housemates = []
+    match_cohort = get_cohort_for(filename, name)
 
+    house = '' 
+
+    roster = all_data(filename)
+
+    for person in roster: 
+      if name == person[0]:
+        house = person[1]
+        break 
+
+    for person in roster: 
+      if person[0] != name and house == person[1] and match_cohort == person[3]:
+        housemates.append(person[0])
+    
+    return set(housemates)
+      
 
 ##############################################################################
 # END OF MAIN EXERCISE.  Yay!  You did it! You Rock!
