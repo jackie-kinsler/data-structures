@@ -17,8 +17,14 @@ def all_houses(filename):
 
     houses = set()
 
-    # TODO: replace this with your code
+    scroll = open(filename)
 
+    for line in scroll: 
+      line = line.rstrip().split("|")
+      house = line[2]
+      if house: 
+        houses.add(house)
+      
     return houses
 
 
@@ -52,7 +58,20 @@ def students_by_cohort(filename, cohort='All'):
 
     students = []
 
-    # TODO: replace this with your code
+    
+
+    scroll = open(filename)
+
+    for line in scroll: 
+      line = line.rstrip().split("|")
+      student_cohort = line[4]
+      full_name = line[0] + " " + line[1]
+
+      if student_cohort == cohort: 
+        students.append(full_name)
+      
+      elif cohort == 'All' and student_cohort != "G" and student_cohort != "I":
+        students.append(full_name)
 
     return sorted(students)
 
