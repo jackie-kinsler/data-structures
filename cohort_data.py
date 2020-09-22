@@ -160,7 +160,11 @@ def all_data(filename):
 
     all_data = []
 
-    # TODO: replace this with your code
+    for line in open(filename):
+      first, last, house, advisor, cohort = line
+      full_name = f"{first} {last}"
+      data = (full_name, house, advisor, cohort)
+      all_data.add(data)
 
     return all_data
 
