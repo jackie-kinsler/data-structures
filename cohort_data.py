@@ -58,8 +58,6 @@ def students_by_cohort(filename, cohort='All'):
 
     students = []
 
-    
-
     scroll = open(filename)
 
     for line in scroll: 
@@ -67,11 +65,9 @@ def students_by_cohort(filename, cohort='All'):
       student_cohort = line[4]
       full_name = line[0] + " " + line[1]
 
-      if student_cohort == cohort: 
+      if student_cohort not in ("I", "G") and cohort in ("All", student_cohort):
         students.append(full_name)
       
-      elif cohort == 'All' and student_cohort != "G" and student_cohort != "I":
-        students.append(full_name)
 
     return sorted(students)
 
@@ -115,9 +111,32 @@ def all_names_by_house(filename):
     ghosts = []
     instructors = []
 
-    # TODO: replace this with your code
+    scroll = open(filename)
 
-    return []
+    
+    for line in scroll: 
+      line = line.rstrip().split("|")
+      first, last, house, advisor, cohort = line
+      full_name = f'{first} {last}'
+      if house == 'Dumbledore\'s Army':
+        dumbledores_army.append(full_name)
+      if house == 'Gryffindor':
+        gryffindor.append(full_name)
+      if house == 'Hufflepuff': 
+        hufflepuff.append(full_name)
+      if house == 'Ravenclaw':
+        ravenclaw.append(full_name)
+      if house == 'Slytherin':
+        slytherin.append(full_name)
+      if cohort == 'G':
+        ghosts.append(full_name)
+      if cohort == 'I':
+        instructors.append(full_name)
+
+
+    return [sorted(dumbledores_army), sorted(gryffindor), sorted(hufflepuff), 
+            sorted(ravenclaw), sorted(slytherin), sorted(ghosts), 
+            sorted(instructors)]
 
 
 def all_data(filename):
